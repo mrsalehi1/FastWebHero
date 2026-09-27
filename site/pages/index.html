@@ -1,0 +1,65 @@
+---
+title: Home
+description: A TypeScript static website published to an Amazon S3 bucket.
+---
+<section class="hero">
+  <p class="eyebrow">Static website</p>
+  <h1>Write the pages. Publish them to S3.</h1>
+  <p class="lede">
+    This starter turns HTML, CSS, and a shared layout into a static site, then
+    uploads that site to an S3 bucket configured for website hosting.
+  </p>
+  <div class="hero-actions">
+    <a class="button" href="/about/">How the build works</a>
+    <a class="button button-quiet" href="/contact/">Contact</a>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="steps-title">
+  <div class="band-heading">
+    <h2 id="steps-title">From folder to website</h2>
+    <p>Three commands cover the whole path from a page edit to a public URL.</p>
+  </div>
+  <ol class="step-list">
+    <li>
+      <h3>Edit</h3>
+      <p>Pages live in <code>site/pages</code>. The shared header and footer live in <code>site/layouts</code>.</p>
+    </li>
+    <li>
+      <h3>Build</h3>
+      <p><code>npm run build</code> renders every page into the <code>dist</code> folder.</p>
+    </li>
+    <li>
+      <h3>Publish</h3>
+      <p><code>npm run publish</code> uploads <code>dist</code> and turns on S3 static website hosting.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="split">
+  <div>
+    <h2>What you change</h2>
+    <p>
+      Rename the site in <code>site/site.json</code>, then replace these sample
+      pages with your own. Styles and images are copied through as static files.
+    </p>
+  </div>
+  <dl class="file-map">
+    <div>
+      <dt>site/pages</dt>
+      <dd>One HTML file for each page.</dd>
+    </div>
+    <div>
+      <dt>site/layouts</dt>
+      <dd>The document that wraps every page.</dd>
+    </div>
+    <div>
+      <dt>site/public</dt>
+      <dd>Files copied to the site root, such as the icon.</dd>
+    </div>
+    <div>
+      <dt>dist</dt>
+      <dd>The finished site that gets uploaded.</dd>
+    </div>
+  </dl>
+</section>

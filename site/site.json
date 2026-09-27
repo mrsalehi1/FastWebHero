@@ -1,0 +1,11 @@
+{
+  "title": "Lark",
+  "description": "A TypeScript static website published to Amazon S3.",
+  "indexDocument": "index.html",
+  "errorDocument": "404.html",
+  "nav": [
+    { "href": "/", "label": "Home" },
+    { "href": "/about/", "label": "About" },
+    { "href": "/contact/", "label": "Contact" }
+  ]
+}

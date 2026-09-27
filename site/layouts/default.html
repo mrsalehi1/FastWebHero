@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{documentTitle}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>{{siteTitle}}</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav id="site-nav" class="site-nav">
+        {{nav}}
+      </nav>
+    </header>
+    <main id="content">
+      {{content}}
+    </main>
+    <footer class="site-footer">
+      <p>&copy; {{year}} {{siteTitle}}</p>
+      <p>Built as static files and hosted from Amazon S3.</p>
+    </footer>
+    <script src="/scripts/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+---
+title: About
+description: How this TypeScript project builds a static site and hosts it on S3.
+---
+<article class="prose">
+  <p class="eyebrow">About</p>
+  <h1>A small builder with a plain output.</h1>
+  <p class="lede">
+    The TypeScript app reads this folder, fills in the layout, and writes
+    normal HTML. After publish, S3 is the web server.
+  </p>
+
+  <h2>Pages</h2>
+  <p>
+    Each file in <code>site/pages</code> is a fragment, not a full document.
+    A short header at the top sets the title and description. The file name
+    becomes the URL: <code>about.html</code> is served at <code>/about/</code>.
+  </p>
+
+  <h2>Layout</h2>
+  <p>
+    <code>site/layouts/default.html</code> holds the parts that repeat: the
+    document head, navigation, and footer. The builder replaces
+    <code>{{content}}</code> with the page, and <code>{{nav}}</code> with the
+    links from <code>site/site.json</code>.
+  </p>
+
+  <h2>Hosting</h2>
+  <p>
+    Deploy uploads every file in <code>dist</code>, sets the index and error
+    documents, and adds a bucket policy so visitors can read the objects. Use a
+    bucket that is only for this site. The S3 website endpoint is HTTP. Put
+    CloudFront in front of it when the site needs HTTPS.
+  </p>
+</article>
