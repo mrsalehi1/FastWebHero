@@ -1,4 +1,4 @@
-# Static website builder
+# FastWebHero
 
 A Node.js app, written in TypeScript, that builds a static website and hosts it from an Amazon S3 bucket.
 

@@ -8,7 +8,7 @@ Security fixes are applied to the latest code on `main`. The project does not ye
 
 Do not open a public issue for a suspected vulnerability.
 
-Use [GitHub private vulnerability reporting](https://github.com/mrsalehi1/Static-website-builder/security/advisories/new) and include:
+Use [GitHub private vulnerability reporting](https://github.com/mrsalehi1/FastWebHero/security/advisories/new) and include:
 
 - the affected command or component;
 - steps to reproduce the problem;

@@ -1,5 +1,5 @@
 {
-  "name": "static-website-builder",
+  "name": "fastwebhero",
   "version": "1.0.0",
   "private": true,
   "description": "Build a static website with TypeScript and host it from an Amazon S3 bucket.",

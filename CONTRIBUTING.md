@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to Static website builder.
+Thank you for contributing to FastWebHero.
 
 ## Development workflow
 
