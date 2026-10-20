@@ -1,77 +1,66 @@
 # Roadmap
 
-The app today builds HTML from `site/` and uploads it to an S3 bucket. The product goal is a website builder for someone who is not a developer. They use a Mac or Windows app, follow a setup wizard, create a complete site, choose static or dynamic, and publish it. AWS is the first host. Azure and Google Cloud come after that path works.
+FastWebHero's next stage is a dependable static site builder: write HTML, preview it locally, and publish the folder to one S3 bucket. The plan stays on that builder.
 
-## Make the current static publish path solid
+## Starting point
 
-- Add tests for front matter, page URLs, the layout template, and navigation.
-- Add tests for content types and cache headers used during upload.
-- Run `npm run typecheck` and the test suite on every push.
-- Add a dry run that prints the objects that would be uploaded or deleted.
-- Upload only files that changed since the last publish.
-- Support redirects, such as `/about` to `/about/`, from `site/site.json`.
-- Skip pages marked `draft: true` unless the command is a local preview.
+The current app renders `site/` into `dist/`, serves a local preview, and can upload that folder to S3. Tests cover config, templating, files, and the website endpoint. CI runs the type check, tests, and build. The sample site is fictional. Setup and CI already in the repo are excluded from the estimates below.
 
-## Mac and Windows app
+## 1. Fix preview and content bugs
 
-Ship a desktop application for macOS and Windows so the person never has to use a terminal.
+Estimated effort: 6 to 8 hours.
 
-- Install and open one app on either system.
-- Guide them with a wizard: site name, static or dynamic, AWS access key, and, when they choose dynamic, the database and where the server runs.
-- Show the header, footer, pages, and shop inside the app.
-- Run the build and the CloudFormation deploy from the wizard, then show the live site URL.
-- Use the same project files on Mac and Windows.
+1. Serve the error document named in `site.json`. See [issue 1](https://github.com/mrsalehi1/FastWebHero/issues/1).
+2. Preview the configured index document, not only `index.html`. See [issue 2](https://github.com/mrsalehi1/FastWebHero/issues/2).
+3. Reject boolean environment values the builder does not understand. See [issue 3](https://github.com/mrsalehi1/FastWebHero/issues/3).
+4. Keep pages marked `draft: true` out of `dist/` unless the command is a local preview. See [issue 4](https://github.com/mrsalehi1/FastWebHero/issues/4).
+5. Build HTML files in subfolders of `site/pages`, or report that they were skipped. See [issue 5](https://github.com/mrsalehi1/FastWebHero/issues/5).
+6. Reject S3 bucket names that look like IP addresses. See [issue 7](https://github.com/mrsalehi1/FastWebHero/issues/7).
+7. Mark the current navigation link when the href and the page URL differ by a trailing slash. See [issue 8](https://github.com/mrsalehi1/FastWebHero/issues/8).
+8. Add regression tests for each fix.
 
-## Publish on AWS from an access key
+Done when the sample site still builds, invalid config fails with a clear message, and these issues have passing tests.
 
-The person provides an AWS access key. The app does the rest.
+## 2. Make publish predictable
 
-- Create a CloudFormation stack for the site: the S3 bucket, a CloudFront distribution, and the permissions that stack needs.
-- Build the site and deploy it through that stack.
-- Serve the site over HTTPS on CloudFront. Prefer the AWS free tier when the account is new.
-- On each publish, upload changed files to S3 and refresh the CloudFront cache.
-- Print the site URL when the stack is ready.
+Estimated effort: 6 to 8 hours.
 
-## A complete site, without writing HTML
+1. Add a dry run that prints the objects that would be uploaded or deleted, and uploads nothing. See [issue 6](https://github.com/mrsalehi1/FastWebHero/issues/6).
+2. Upload only files whose bytes changed since the last publish.
+3. Limit deletion to objects this site published. Leave other objects in the bucket alone unless the owner confirms the bucket is only for this site.
+4. Test content types and cache headers used during upload.
 
-- Ship a starter site with a header, a footer, navigation, and the usual pages: home, about, and contact.
-- Let the person edit the header and footer once and reuse them on every page.
-- Add a visual page builder, in the style of a WordPress builder such as Elementor: sections, columns, text, images, and buttons.
-- Save the builder layout as the source of the page, then render it to the published site.
+Done when a second publish of an unchanged site uploads nothing, and a dry run lists actions without calling S3.
 
-## Static or dynamic
+## 3. Redirects and page URLs
 
-The person chooses the mode when they create the site.
+Estimated effort: 4 to 6 hours.
 
-- Static mode publishes files only. No database and no application server. Hosting stays on S3 and CloudFront.
-- Dynamic mode adds an application server and a database. Use it for accounts, forms, and a shop.
+1. Support redirects, such as `/about` to `/about/`, from `site/site.json`.
+2. Use the same redirect rules in the local preview and in the published website config.
+3. Document how a page file name becomes a URL, including `path` in the page header.
 
-## Shop and accounts
+Done when `/about` and `/about/` reach the same page locally and on the S3 website endpoint.
 
-These belong to dynamic mode.
+## 4. Document a repeatable publish
 
-- Add user accounts: sign up, sign in, and a way for the site owner to manage users.
-- Add a shop the owner can fill in without writing code: products, cart, and checkout.
-- Publish the storefront to S3 and update CloudFront. Orders, accounts, and stock stay on the server.
+Estimated effort: 4 to 6 hours.
 
-## Database and where the server runs
+1. Document the IAM actions, the bucket region, and how to remove the site from the bucket.
+2. Keep account-specific values in `.env`, using the placeholders in `.env.example`.
+3. Check a fresh local build before describing a publish, and write down what a failed upload looks like.
+4. Note that the S3 website endpoint is HTTP, and that HTTPS is a later CloudFront step in front of the same bucket.
 
-The person chooses both.
+Done when someone can preview the fictional sample with Node.js alone, and can publish only after filling in their own bucket settings.
 
-- Support PostgreSQL and MySQL.
-- Run the dynamic app on an EC2 instance or in Docker.
-- Include the chosen database and compute option in the same deploy as the site.
+## Planning estimate
 
-## Azure and Google Cloud
+The open work above is estimated at 20 to 28 hours, including implementation, tests, and documentation. These are planning estimates based on the current builder. Update them as work is completed or a task changes.
 
-After the AWS path is in place, offer the same choices on the other clouds.
+All four stages remain planned. The open issues are part of stage 1 and stage 2, rather than extra work counted twice.
 
-- Azure: static hosting equivalent to S3 and CloudFront, plus a server and database option.
-- Google Cloud: the same split between static files and a dynamic server.
-- Keep one project format so a site can move between AWS, Azure, and Google Cloud without being rebuilt by hand.
+## Product boundaries
 
-## MCP for an AI assistant
+Development examples use the fictional Lark sample. This plan does not add visitor accounts, contact storage, a shop, checkout, or other people's personal or payment records.
 
-- Expose an MCP server for the site.
-- Let an assistant list pages, create content, and update the header, footer, and pages through that server.
-- Apply those edits in the builder, then publish them with the same S3 and CloudFront deploy.
+The builder does not call a model, retrieve documents for an assistant, or ship an assistant connection. Any later change in direction should be written down before that work begins.

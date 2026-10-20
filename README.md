@@ -1,10 +1,18 @@
 # FastWebHero
 
-A Node.js app, written in TypeScript, that builds a static website and hosts it from an Amazon S3 bucket.
+FastWebHero builds a small static website from HTML files and can publish that folder to an Amazon S3 bucket. It is for someone who wants a local preview and a publish command without a larger site framework.
 
-It is for someone who writes a small site as HTML files and wants a local preview plus a publish command, without a larger site framework. `site/` is the website you edit. `src/` is the builder. `npm run build` writes the finished site to `dist/`. `npm run publish` uploads that folder and turns on S3 static website hosting.
+`site/` is the website you edit. `src/` is the builder, written in TypeScript for Node.js. `npm run build` writes the finished site to `dist/`. `npm run dev` previews it on your machine. `npm run publish` uploads that folder and turns on S3 static website hosting.
 
-Planned work is listed in [ROADMAP.md](ROADMAP.md). The code is released under the [MIT License](LICENSE).
+The sample site is fictional. Its name in `site/site.json` is Lark. The builder does not collect visitor accounts, messages, or payment details.
+
+## Current status
+
+This is an early static builder. It renders pages from `site/pages`, copies styles and scripts, serves a local preview, and can upload `dist/` to one S3 bucket.
+
+Content is still HTML you write by hand. Drafts, redirects, a dry run, and uploading only changed files are planned. The roadmap keeps that work on the static builder.
+
+The sample pages are made up. Local preview does not need an AWS account. Publish uses credentials the AWS SDK already finds on your machine, such as an environment variable, `AWS_PROFILE`, SSO, or an instance role. Do not put access keys in the repository.
 
 ## Layout
 
@@ -29,7 +37,7 @@ A page file named `about.html` is published at `/about/`. `index.html` stays at 
 ## Requirements
 
 - Node.js 20 or newer
-- An AWS account, and credentials the AWS SDK can find (environment variables, `AWS_PROFILE`, SSO, or an instance role)
+- For publish only: an AWS account, and credentials the AWS SDK can find
 - An S3 bucket used only for this site
 
 ## Setup
@@ -39,7 +47,9 @@ npm install
 copy .env.example .env
 ```
 
-Edit `.env` and set `AWS_REGION` and `S3_BUCKET`. Set `S3_CREATE_BUCKET=true` if the bucket does not exist yet.
+On macOS or Linux, use `cp .env.example .env`. You can run `npm run dev` before editing `.env`. Set `AWS_REGION` and `S3_BUCKET` before `npm run publish`. Set `S3_CREATE_BUCKET=true` if the bucket does not exist yet.
+
+`.env` is listed in `.gitignore`. `.env.example` has placeholders only.
 
 ## Commands
 
@@ -55,10 +65,6 @@ Edit `.env` and set `AWS_REGION` and `S3_BUCKET`. Set `S3_CREATE_BUCKET=true` if
 | `npm run check` | Type-check, test, and build as CI does |
 
 `npm run dev -- --port 4173` uses another preview port.
-
-## Contributing
-
-Changes are made through reviewed pull requests with required CI checks. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and [SECURITY.md](SECURITY.md) for private vulnerability reporting.
 
 ## Edit the site
 
@@ -95,8 +101,8 @@ S3 website endpoints serve HTTP only. For HTTPS, put Amazon CloudFront in front 
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `AWS_REGION` | required | Bucket region |
-| `S3_BUCKET` | required | Destination bucket |
+| `AWS_REGION` | required for publish | Bucket region |
+| `S3_BUCKET` | required for publish | Destination bucket |
 | `S3_CREATE_BUCKET` | `false` | Create the bucket when it is missing |
 | `S3_PUBLIC_WEBSITE` | `true` | Enable public reads and website hosting access |
 | `S3_DELETE_REMOVED` | `true` | Remove objects that are no longer in `dist/` |
@@ -114,3 +120,11 @@ The credentials used for deploy need:
 - `s3:PutBucketWebsite`
 - `s3:PutPublicAccessBlock`
 - `s3:CreateBucket`, only if the tool should create the bucket
+
+## Plans
+
+Open bugs and the remaining static-builder work are listed in [ROADMAP.md](ROADMAP.md).
+
+## License
+
+MIT. The full text is in [LICENSE](LICENSE).
