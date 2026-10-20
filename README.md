@@ -4,13 +4,13 @@ FastWebHero builds a small static website from HTML files and can publish that f
 
 `site/` is the website you edit. `src/` is the builder, written in TypeScript for Node.js. `npm run build` writes the finished site to `dist/`. `npm run dev` previews it on your machine. `npm run publish` uploads that folder and turns on S3 static website hosting.
 
-The sample site is fictional. Its name in `site/site.json` is Lark. The builder does not collect visitor accounts, messages, or payment details.
+The sample site is fictional. Its name in `site/site.json` is Lark. This release only builds and publishes files. Accounts, products, and the shop are planned in the web builder and are not in the current commands.
 
 ## Current status
 
 This is an early static builder. It renders pages from `site/pages`, copies styles and scripts, serves a local preview, and can upload `dist/` to one S3 bucket.
 
-Content is still HTML you write by hand. Drafts, redirects, a dry run, and uploading only changed files are planned. The roadmap keeps that work on the static builder.
+Content is still HTML you write by hand. The planned product is a web builder with export, plus **multitenant** sites, **accounts**, **products**, a **shop**, and an **MCP server** other components can call. There is no desktop app.
 
 The sample pages are made up. Local preview does not need an AWS account. Publish uses credentials the AWS SDK already finds on your machine, such as an environment variable, `AWS_PROFILE`, SSO, or an instance role. Do not put access keys in the repository.
 
@@ -123,7 +123,7 @@ The credentials used for deploy need:
 
 ## Plans
 
-Open bugs and the remaining static-builder work are listed in [ROADMAP.md](ROADMAP.md).
+The web builder, export, tenants, accounts, products, shop, and MCP server are listed in [ROADMAP.md](ROADMAP.md), with the open builder bugs.
 
 ## License
 
